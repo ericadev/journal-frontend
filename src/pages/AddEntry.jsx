@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Container, Row, Col } from 'react-bootstrap';
-const rootUrl = 'https://calm-wildwood-64838.herokuapp.com/api/v1';
+import rootUrl from '../rootUrl';
 
 export default class AddEntry extends Component {
   state = {

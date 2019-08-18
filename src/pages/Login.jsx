@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { Container, Row, Col } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
-const rootUrl = 'https://calm-wildwood-64838.herokuapp.com/api/v1';
+import rootUrl from '../rootUrl';
 
 class Login extends Component {
   state = {
