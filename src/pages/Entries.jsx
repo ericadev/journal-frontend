@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Container, Row, Col } from 'react-bootstrap';
-const rootUrl = 'http://localhost:3001/api/v2';
+const rootUrl = 'https://calm-wildwood-64838.herokuapp.com/api/v1';
 
 export default class Entries extends Component {
   state = {

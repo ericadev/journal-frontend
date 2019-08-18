@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { Redirect } from 'react-router-dom';
 import { Container, Row, Col } from 'react-bootstrap';
-const rootUrl = 'http://localhost:3001/api/v1';
+const rootUrl = 'https://calm-wildwood-64838.herokuapp.com/api/v1';
 
 class Register extends Component {
   state = {
