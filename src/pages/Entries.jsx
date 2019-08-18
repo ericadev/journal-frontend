@@ -5,10 +5,15 @@ const rootUrl = 'https://calm-wildwood-64838.herokuapp.com/api/v1';
 
 export default class Entries extends Component {
   state = {
-    entries: []
+    entries: [],
+    editingMode: false
   };
 
   componentDidMount() {
+    this.getEntries();
+  }
+
+  getEntries = () => {
     const token = localStorage.getItem('token');
 
     if (token) {
@@ -26,10 +31,42 @@ export default class Entries extends Component {
           })
         );
     }
+  };
+
+  componentDidUpdate(prevProps, prevState) {
+    const { editingMode: prevEditingMode } = prevState;
+    const { editingMode: currEditingMode } = this.state;
+
+    if (prevEditingMode !== currEditingMode) {
+      this.getEntries();
+    }
   }
 
   handleAddEntryClick = () => {
     this.props.history.push('/addEntry');
+  };
+
+  editEntry = id => {
+    const token = localStorage.getItem('token');
+
+    if (token) {
+      axios
+        .get(`${rootUrl}/entries/${id}`, {
+          headers: {
+            authorization: `Bearer ${token}`
+          }
+        })
+        .then(response => {
+          const { title, content, date } = response.data.data.entry;
+          this.setState({
+            title,
+            date,
+            content,
+            editingMode: true,
+            id
+          });
+        });
+    }
   };
 
   deleteEntry = id => {
@@ -59,15 +96,120 @@ export default class Entries extends Component {
     }
   };
 
-  render() {
-    const { entries, error } = this.state;
+  changeValue = e => {
+    this.setState({
+      [e.target.name]: e.target.value
+    });
+  };
 
-    if (entries.length > 0) {
+  submitForm = (e, id) => {
+    const { title, date, content } = this.state;
+
+    if (!title || !date || !content) {
+      this.setState({
+        error: 'Please enter a value for all fields and try again.'
+      });
+      e.preventDefault();
+      return;
+    }
+
+    const token = localStorage.getItem('token');
+
+    if (token) {
+      axios
+        .put(
+          `${rootUrl}/entries/${id}`,
+          {
+            title,
+            date,
+            content
+          },
+          {
+            headers: {
+              authorization: `Bearer ${token}`
+            }
+          }
+        )
+        .then(response => {
+          this.setState({ editingMode: false });
+          this.props.history.push('/entries');
+        })
+        .catch(err => {
+          this.setState({
+            error:
+              'There was an error saving data, please check all fields are entered and try again.'
+          });
+        });
+    } else {
+      this.setState({ error: 'Not logged in, please login again' });
+    }
+    e.preventDefault();
+  };
+
+  render() {
+    const { entries, error, editingMode, id } = this.state;
+
+    if (!editingMode) {
+      if (entries.length > 0) {
+        return (
+          <Container>
+            <Row>
+              <Col>
+                <h1>Entries</h1>
+              </Col>
+            </Row>
+            <Row>
+              <Col>{error ? <h2>Error: {error}</h2> : null}</Col>
+            </Row>
+            <Row>
+              <Col>
+                <ul>
+                  {entries.map(entry => (
+                    <div key={entry._id}>
+                      <h3>{entry.title}</h3>
+                      <small>{entry.date}</small>
+                      <p>{entry.content}</p>
+                      <button onClick={() => this.editEntry(entry._id)}>
+                        Edit
+                      </button>
+                      <button onClick={() => this.deleteEntry(entry._id)}>
+                        Delete
+                      </button>
+                    </div>
+                  ))}
+                </ul>
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <button onClick={this.handleAddEntryClick}>Add Entry</button>
+              </Col>
+            </Row>
+          </Container>
+        );
+      } else {
+        return (
+          <Container>
+            <Row>
+              <Col>
+                Please login to see journal entries If you are logged in, there
+                are no entries, so add one.
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <button onClick={this.handleAddEntryClick}>Add Entry</button>
+              </Col>
+            </Row>
+          </Container>
+        );
+      }
+    } else {
       return (
         <Container>
           <Row>
             <Col>
-              <h1>Entries</h1>
+              <h1>Edit Entry</h1>
             </Col>
           </Row>
           <Row>
@@ -75,39 +217,50 @@ export default class Entries extends Component {
           </Row>
           <Row>
             <Col>
-              <ul>
-                {entries.map(entry => (
-                  <div key={entry._id}>
-                    <h3>{entry.title}</h3>
-                    <small>{entry.date}</small>
-                    <p>{entry.content}</p>
-                    <button onClick={() => this.deleteEntry(entry._id)}>
-                      Delete
-                    </button>
-                  </div>
-                ))}
-              </ul>
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              <button onClick={this.handleAddEntryClick}>Add Entry</button>
-            </Col>
-          </Row>
-        </Container>
-      );
-    } else {
-      return (
-        <Container>
-          <Row>
-            <Col>
-              Please login to see journal entries If you are logged in, there
-              are no entries, so add one.
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              <button onClick={this.handleAddEntryClick}>Add Entry</button>
+              <form>
+                <div className='form-group'>
+                  <label htmlFor='title'>Title</label>
+                  <input
+                    type='text'
+                    className='form-control'
+                    id='title'
+                    placeholder='Enter title'
+                    onChange={this.changeValue}
+                    name='title'
+                    value={this.state.title}
+                  />
+                </div>
+                <div className='form-group'>
+                  <label htmlFor='date'>Date</label>
+                  <input
+                    type='text'
+                    className='form-control'
+                    id='date'
+                    placeholder='Date'
+                    onChange={this.changeValue}
+                    name='date'
+                    value={this.state.date}
+                  />
+                </div>
+                <div className='form-group'>
+                  <label htmlFor='content'>Content</label>
+                  <input
+                    type='text'
+                    className='form-control'
+                    id='content'
+                    placeholder='Content'
+                    onChange={this.changeValue}
+                    name='content'
+                    value={this.state.content}
+                  />
+                </div>
+                <button
+                  onClick={e => this.submitForm(e, id)}
+                  className='btn btn-primary'
+                >
+                  Submit
+                </button>
+              </form>
             </Col>
           </Row>
         </Container>
