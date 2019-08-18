@@ -171,7 +171,13 @@ export default class Entries extends Component {
                   {entries.map(entry => (
                     <Card
                       key={entry._id}
-                      style={{ width: '20rem', float: 'left', margin: '2rem' }}
+                      style={{
+                        width: '20rem',
+                        float: 'left',
+                        margin: '2rem',
+                        height: '20rem',
+                        overflow: 'auto'
+                      }}
                     >
                       <Card.Body>
                         <Card.Title>

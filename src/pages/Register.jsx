@@ -63,7 +63,7 @@ class Register extends Component {
       <Container>
         <Row>
           <Col>
-            <h1>Login</h1>
+            <h1>Register</h1>
           </Col>
         </Row>
         <Row>

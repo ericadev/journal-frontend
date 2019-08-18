@@ -8,9 +8,11 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Entries from './pages/Entries';
 import AddEntry from './pages/AddEntry';
+import Navbar from './components/Navbar';
 
 ReactDOM.render(
   <Router>
+    <Navbar />
     <Route exact path='/' component={App} />
     <Route path='/login' component={Login} />
     <Route path='/register' component={Register} />
