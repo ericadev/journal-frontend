@@ -1,13 +1,17 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import './App.css';
+import { Container, Row, Col } from 'react-bootstrap';
 
 const App = () => {
   return (
-    <div>
-      Please <Link to='/login'>Login</Link> or{' '}
-      <Link to='/register'>Register</Link> to view or add journal entries.
-    </div>
+    <Container>
+      <Row>
+        <Col>
+          Please <Link to='/login'>Login</Link> or{' '}
+          <Link to='/register'>Register</Link> to view or add journal entries.
+        </Col>
+      </Row>
+    </Container>
   );
 };
 

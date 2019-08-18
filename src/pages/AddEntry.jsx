@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { Container, Row, Col } from 'react-bootstrap';
 const rootUrl = 'http://localhost:3001/api/v1';
 
 export default class AddEntry extends Component {
@@ -63,50 +64,58 @@ export default class AddEntry extends Component {
     const { error } = this.state;
 
     return (
-      <div className='container'>
-        <h1>Add Entry</h1>
-        {error ? <h2>Error: {error}</h2> : null}
-        <div className='row'>
-          <form>
-            <div className='form-group'>
-              <label htmlFor='title'>Title</label>
-              <input
-                type='text'
-                className='form-control'
-                id='title'
-                placeholder='Enter title'
-                onChange={this.changeValue}
-                name='title'
-              />
-            </div>
-            <div className='form-group'>
-              <label htmlFor='date'>Date</label>
-              <input
-                type='text'
-                className='form-control'
-                id='date'
-                placeholder='Date'
-                onChange={this.changeValue}
-                name='date'
-              />
-            </div>
-            <div className='form-group'>
-              <label htmlFor='content'>Content</label>
-              <input
-                type='text'
-                className='form-control'
-                id='content'
-                placeholder='Content'
-                onChange={this.changeValue}
-                name='content'
-              />
-            </div>
-            <button onClick={this.submitForm} className='btn btn-primary'>
-              Submit
-            </button>
-          </form>
-        </div>
-      </div>
+      <Container>
+        <Row>
+          <Col>
+            <h1>Add Entry</h1>
+          </Col>
+        </Row>
+        <Row>
+          <Col>{error ? <h2>Error: {error}</h2> : null}</Col>
+        </Row>
+        <Row>
+          <Col>
+            <form>
+              <div className='form-group'>
+                <label htmlFor='title'>Title</label>
+                <input
+                  type='text'
+                  className='form-control'
+                  id='title'
+                  placeholder='Enter title'
+                  onChange={this.changeValue}
+                  name='title'
+                />
+              </div>
+              <div className='form-group'>
+                <label htmlFor='date'>Date</label>
+                <input
+                  type='text'
+                  className='form-control'
+                  id='date'
+                  placeholder='Date'
+                  onChange={this.changeValue}
+                  name='date'
+                />
+              </div>
+              <div className='form-group'>
+                <label htmlFor='content'>Content</label>
+                <input
+                  type='text'
+                  className='form-control'
+                  id='content'
+                  placeholder='Content'
+                  onChange={this.changeValue}
+                  name='content'
+                />
+              </div>
+              <button onClick={this.submitForm} className='btn btn-primary'>
+                Submit
+              </button>
+            </form>
+          </Col>
+        </Row>
+      </Container>
     );
   }
 }
