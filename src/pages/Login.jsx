@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col, Button } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
 import rootUrl from '../rootUrl';
 
@@ -92,9 +92,9 @@ class Login extends Component {
                   name='password'
                 />
               </div>
-              <button onClick={this.submitForm} className='btn btn-primary'>
+              <Button onClick={this.submitForm} className='btn btn-primary'>
                 Submit
-              </button>
+              </Button>
             </form>
           </Col>
         </Row>

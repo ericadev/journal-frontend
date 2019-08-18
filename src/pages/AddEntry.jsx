@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col, Button } from 'react-bootstrap';
 import rootUrl from '../rootUrl';
 
 export default class AddEntry extends Component {
@@ -108,9 +108,9 @@ export default class AddEntry extends Component {
                   name='content'
                 />
               </div>
-              <button onClick={this.submitForm} className='btn btn-primary'>
+              <Button onClick={this.submitForm} className='btn btn-primary'>
                 Submit
-              </button>
+              </Button>
             </form>
           </Col>
         </Row>

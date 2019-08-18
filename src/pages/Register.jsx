@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Redirect } from 'react-router-dom';
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col, Button } from 'react-bootstrap';
 import rootUrl from '../rootUrl';
 
 class Register extends Component {
@@ -117,9 +117,9 @@ class Register extends Component {
                   name='passwordConfirm'
                 />
               </div>
-              <button onClick={this.submitForm} className='btn btn-primary'>
+              <Button onClick={this.submitForm} className='btn btn-primary'>
                 Submit
-              </button>
+              </Button>
             </form>
           </Col>
         </Row>

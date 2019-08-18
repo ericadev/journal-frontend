@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 import rootUrl from '../rootUrl';
 
 export default class Entries extends Component {
@@ -169,24 +169,38 @@ export default class Entries extends Component {
               <Col>
                 <ul>
                   {entries.map(entry => (
-                    <div key={entry._id}>
-                      <h3>{entry.title}</h3>
-                      <small>{entry.date}</small>
-                      <p>{entry.content}</p>
-                      <button onClick={() => this.editEntry(entry._id)}>
-                        Edit
-                      </button>
-                      <button onClick={() => this.deleteEntry(entry._id)}>
-                        Delete
-                      </button>
-                    </div>
+                    <Card
+                      key={entry._id}
+                      style={{ width: '20rem', float: 'left', margin: '2rem' }}
+                    >
+                      <Card.Body>
+                        <Card.Title>
+                          <h3>{entry.title}</h3>
+                        </Card.Title>
+                        <Card.Subtitle>
+                          <small>{entry.date}</small>
+                        </Card.Subtitle>
+                        <Card.Text>{entry.content}</Card.Text>
+                        <Card.Subtitle>
+                          <Button
+                            onClick={() => this.editEntry(entry._id)}
+                            style={{ marginRight: '1rem' }}
+                          >
+                            Edit
+                          </Button>
+                          <Button onClick={() => this.deleteEntry(entry._id)}>
+                            Delete
+                          </Button>
+                        </Card.Subtitle>
+                      </Card.Body>
+                    </Card>
                   ))}
                 </ul>
               </Col>
             </Row>
             <Row>
               <Col>
-                <button onClick={this.handleAddEntryClick}>Add Entry</button>
+                <Button onClick={this.handleAddEntryClick}>Add Entry</Button>
               </Col>
             </Row>
           </Container>
