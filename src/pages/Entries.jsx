@@ -65,6 +65,11 @@ export default class Entries extends Component {
             editingMode: true,
             id
           });
+        })
+        .catch(err => {
+          this.setState({
+            error: err.response.data.message
+          });
         });
     }
   };
@@ -88,11 +93,11 @@ export default class Entries extends Component {
             })
             .then(response => this.setState({ entries: response.data.data }));
         })
-        .catch(err =>
+        .catch(err => {
           this.setState({
-            error: 'There was an error deleting this entry, please try again.'
-          })
-        );
+            error: err.response.data.message
+          });
+        });
     }
   };
 
@@ -136,8 +141,7 @@ export default class Entries extends Component {
         })
         .catch(err => {
           this.setState({
-            error:
-              'There was an error saving data, please check all fields are entered and try again.'
+            error: err.response.data.message
           });
         });
     } else {

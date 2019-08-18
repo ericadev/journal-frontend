@@ -44,8 +44,7 @@ export default class AddEntry extends Component {
         })
         .catch(err => {
           this.setState({
-            error:
-              'There was an error saving data, please check all fields are entered and try again.'
+            error: err.response.data.message
           });
         });
     } else {

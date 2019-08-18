@@ -8,7 +8,9 @@ const App = () => {
       <Row>
         <Col>
           Please <Link to='/login'>Login</Link> or{' '}
-          <Link to='/register'>Register</Link> to view or add journal entries.
+          <Link to='/register'>Register</Link> to view journal entries. Please
+          note, you can only add, update, or delete entries if you are an
+          administrator.
         </Col>
       </Row>
     </Container>
