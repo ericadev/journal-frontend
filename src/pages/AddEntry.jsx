@@ -23,15 +23,17 @@ export default class AddEntry extends Component {
     }
 
     const token = localStorage.getItem('token');
+    const user_id = localStorage.getItem('user_id');
 
     if (token) {
       axios
         .post(
-          `${rootUrl}/entries`,
+          `${rootUrl}/entries/${user_id}`,
           {
             title,
             date,
-            content
+            content,
+            user_id
           },
           {
             headers: {
@@ -40,7 +42,7 @@ export default class AddEntry extends Component {
           }
         )
         .then(response => {
-          this.props.history.push('/entries');
+          this.props.history.push(`/entries/${user_id}`);
         })
         .catch(err => {
           this.setState({

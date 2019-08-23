@@ -15,10 +15,11 @@ export default class Entries extends Component {
 
   getEntries = () => {
     const token = localStorage.getItem('token');
+    const user_id = localStorage.getItem('user_id');
 
     if (token) {
       axios
-        .get(`${rootUrl}/entries`, {
+        .get(`${rootUrl}/entries/${user_id}`, {
           headers: {
             authorization: `Bearer ${token}`
           }
@@ -48,10 +49,11 @@ export default class Entries extends Component {
 
   editEntry = id => {
     const token = localStorage.getItem('token');
+    const user_id = localStorage.getItem('user_id');
 
     if (token) {
       axios
-        .get(`${rootUrl}/entries/${id}`, {
+        .get(`${rootUrl}/entries/${user_id}/${id}`, {
           headers: {
             authorization: `Bearer ${token}`
           }
@@ -68,7 +70,7 @@ export default class Entries extends Component {
         })
         .catch(err => {
           this.setState({
-            error: err.response.data.message
+            error: err.message
           });
         });
     }
@@ -76,6 +78,7 @@ export default class Entries extends Component {
 
   deleteEntry = id => {
     const token = localStorage.getItem('token');
+    const user_id = localStorage.getItem('user_id');
 
     if (token) {
       axios
@@ -86,7 +89,7 @@ export default class Entries extends Component {
         })
         .then(response => {
           axios
-            .get(`${rootUrl}/entries`, {
+            .get(`${rootUrl}/entries/${user_id}`, {
               headers: {
                 authorization: `Bearer ${token}`
               }
@@ -109,6 +112,7 @@ export default class Entries extends Component {
 
   submitForm = (e, id) => {
     const { title, date, content } = this.state;
+    const user_id = localStorage.getItem('user_id');
 
     if (!title || !date || !content) {
       this.setState({
@@ -137,7 +141,7 @@ export default class Entries extends Component {
         )
         .then(response => {
           this.setState({ editingMode: false });
-          this.props.history.push('/entries');
+          this.props.history.push(`/entries/${user_id}`);
         })
         .catch(err => {
           this.setState({

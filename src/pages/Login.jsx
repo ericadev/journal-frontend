@@ -30,6 +30,7 @@ class Login extends Component {
       })
       .then(response => {
         localStorage.setItem('token', response.data.token);
+        localStorage.setItem('user_id', response.data.user_id);
         this.setState({
           loggedIn: true
         });
@@ -51,9 +52,10 @@ class Login extends Component {
 
   render() {
     const { loggedIn, error } = this.state;
+    const user_id = localStorage.getItem('user_id');
 
     if (loggedIn) {
-      return <Redirect to='/entries' />;
+      return <Redirect to={`/entries/${user_id}`} />;
     }
 
     return (
