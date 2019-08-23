@@ -17,7 +17,7 @@ export default class Entries extends Component {
     const token = localStorage.getItem('token');
     const user_id = localStorage.getItem('user_id');
 
-    if (token) {
+    if (token && user_id !== 'undefined') {
       axios
         .get(`${rootUrl}/entries/${user_id}`, {
           headers: {
