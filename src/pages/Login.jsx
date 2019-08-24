@@ -29,11 +29,17 @@ class Login extends Component {
         password
       })
       .then(response => {
-        localStorage.setItem('token', response.data.token);
-        localStorage.setItem('user_id', response.data.user_id);
-        this.setState({
-          loggedIn: true
-        });
+        if (!response.data.token || !response.data.user_id) {
+          this.setState({
+            error: 'Invalid user, please check the fields and try again'
+          });
+        } else {
+          localStorage.setItem('token', response.data.token);
+          localStorage.setItem('user_id', response.data.user_id);
+          this.setState({
+            loggedIn: true
+          });
+        }
       })
       .catch(err => {
         this.setState({

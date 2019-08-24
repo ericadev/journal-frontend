@@ -5,12 +5,7 @@ const App = () => {
   return (
     <Container>
       <Row>
-        <Col>
-          <h2>
-            Please note: You must be an administrator in order to add, update,
-            or delete entries yourself.
-          </h2>
-        </Col>
+        <Col>Please register or login to continue.</Col>
       </Row>
     </Container>
   );
